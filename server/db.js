@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const pass = process.env.pass;
-const User = require("./models/users");
+const User = require("./models/usersModel");
 mongoose.connect(
   `mongodb+srv://peckovychv:${pass}@cluster0.3lplq.mongodb.net/notatnyk`
 );

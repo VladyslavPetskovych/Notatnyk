@@ -8,10 +8,10 @@ app.get("/", (req, res) => {
   res.send("кореневий шлях нотатника");
 });
 
-const userRouter = require("./routes/user");
+const userRouter = require("./routes/usersRoute");
 
 app.use("/user", userRouter);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Додаток запущено на ${port} порті`);
 });
