@@ -1,9 +1,15 @@
 const mongoose = require("mongoose");
 
-require("dotenv").config();
+require("dotenv").config({ path: '../.env' });
 
 const pass = process.env.pass;
-const User = require("./models/usersModel");
+console.log(pass)
+console.log(pass)
+console.log(pass)
+console.log(pass)
+console.log(pass)
+console.log(pass)
+
 mongoose.connect(
   `mongodb+srv://peckovychv:${pass}@cluster0.3lplq.mongodb.net/notatnyk`
 );
