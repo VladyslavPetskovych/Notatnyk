@@ -19,7 +19,7 @@ const scheduleMarup = {
 };
 
 const mySchedule = async (chatId, msgId) => {
-  bot.sendMessage(chatId, "Ваш наявний  розклад");
+  bot.sendMessage(chatId, "Ваш наявний  розклад",scheduleMarup);
   console.log("AAAAAA");
   await bot.answerCallbackQuery(msgId);
 };

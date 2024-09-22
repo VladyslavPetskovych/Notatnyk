@@ -4,7 +4,6 @@ const oneLessonSchema = new mongoose.Schema({
   title: { type: String },
   professor: { type: String },
   link: { type: String },
-  time: { type: String },
 });
 
 const daySchema = new mongoose.Schema({
