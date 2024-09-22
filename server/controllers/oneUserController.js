@@ -1,35 +1,25 @@
-const {
-  successResponse,
-  errorResponse,
-} = require("../utils/responseFormatter");
 const oneUserService = require("../services/oneUserService");
 
 exports.GetOneUser = async (req, res) => {
   try {
-    const oneUser = await oneUserService.GetOneUser();
-    return res
-      .status(200)
-      .json(
-        successResponse(oneUser, "Надіслав тобі дані по цьому користувачу")
-      );
+    const { idC } = req.params;
+    const oneUser = await oneUserService.GetOneUser(idC);
+    return res.status(200).json(oneUser);
   } catch (error) {
-    return res
-      .status(500)
-      .json(errorResponse(error, "get one user errrorororo "));
+    return res.status(500).json("get one user errrorororo ");
   }
 };
 
 exports.postOneUser = async (req, res) => {
   try {
-    const { userData } = req.body;
+    const { idC, name } = req.body;
 
-    const oneUser = await oneUserService.postOneUser(userData);
-    return res
-      .status(200)
-      .json(successResponse(oneUser, "Додав нового користувача"));
+    if (!idC || !name) {
+      return res.status(400).json({ message: "idC or name missing" });
+    }
+    await oneUserService.postOneUser({ idC, name });
+    return res.status(200).json("Додав нового користувача");
   } catch (error) {
-    return res
-      .status(500)
-      .json(errorResponse(error, "post one user errrorororo "));
+    return res.status(500).json("post one user errrorororo ");
   }
 };

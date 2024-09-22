@@ -1,7 +1,6 @@
-const Users = require('../models/usersModel');
+const Users = require("../models/users");
 
-// Отримати всіх користувачів
+
 exports.getAllUsers = async () => {
-    return await Users.find(); // Повертаємо всіх користувачів з бази
+  return await Users.find(); 
 };
-
