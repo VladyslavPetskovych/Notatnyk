@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const oneLessonSchema = new mongoose.Schema({
   title: { type: String },
   professor: { type: String },
+  room: { type: String },
   link: { type: String },
 });
 

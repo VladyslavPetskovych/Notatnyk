@@ -1,5 +1,8 @@
 const bot = require("../bot");
 
+const userSchedules = new Map();
+
+
 const editScheduleMarup = {
   reply_markup: JSON.stringify({
     inline_keyboard: [
@@ -22,31 +25,45 @@ const editScheduleMarup = {
   }),
 };
 
-bot.on("callback_query", async (msg) => {
-  const chatId = msg.message.chat.id;
-  const msgId = msg.id;
-  const userChoice = msg.data;
+const editMarkupDay = {
+  inline_keyboard: [
+    [
+      { text: "1️⃣", callback_data: "lesson1" },
+    ],
+    [
+      { text: "2️⃣", callback_data: "lesson2" },
+    ],
+    [
+      { text: "3️⃣", callback_data: "lesson3" },
+    ],
+    [
+      { text: "4️⃣", callback_data: "lesson4" },
+    ],
+    [
+      { text: "5️⃣", callback_data: "lesson5" },
+    ],
+    [    { text: "Назад", callback_data: "edit_back_to_week" },]
+  ],
+};
 
-  switch (userChoice) {
-    case "edit_monday","edit_tuesday","edit_wednesday","edit_thursday","edit_friday":
-        selectedDay(chatId,msgId,userChoice)
-      break;
-      case "edit_odd","edit_even":
-        selectedWeek(chatId,msgId,userChoice)
-      break;
-  }
-});
 
-const selectedDay = (day) => {
-    console.log("selectedDay")
+
+const selectedDay = async (chatId, msgId, day) => {
+  await bot.editMessageText("Запишіть окремо інформацію по кожній парі", {
+    chat_id: chatId,
+    message_id: msgId,
+  });
+  await bot.editMessageReplyMarkup(editMarkupDay, {
+    chat_id: chatId,
+    message_id: msgId,
+  });
+  console.log("selectedDay", chatId, msgId, day);
 };
 
 const selectedWeek = (week) => {
-    console.log("selectedDay")
+  console.log("selectedDay");
 };
 
-const editLesson = (day, time) => {
-  console.log("edit lesson");
-};
 
-module.exports = { editLesson, editScheduleMarup };
+
+module.exports = {selectedDay, editScheduleMarup };
