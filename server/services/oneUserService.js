@@ -1,12 +1,11 @@
 const User = require("../models/users");
 
 exports.GetOneUser = async (idC) => {
-    try {
-       
-        return await User.findOne({ chatId: idC });
-      } catch (error) {
-        throw new Error("Database error while fetching user");
-      }
+  try {
+    return await User.findOne({ chatId: idC });
+  } catch (error) {
+    throw new Error("Database error while fetching user");
+  }
 };
 
 exports.postOneUser = async ({ idC, name }) => {

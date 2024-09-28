@@ -5,7 +5,7 @@ const editMarkupLesson = {
   inline_keyboard: [
     [
       { text: "предмет", callback_data: "subject" },
-      { text: "Викладач", callback_data: "proff" },
+      { text: "Викладач", callback_data: "professor" },
       { text: "аудиторія", callback_data: "lab" },
     ],
     [{ text: "Назад", callback_data: "edit_back_to_time" }],

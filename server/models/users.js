@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const {weekSchema} = require('./schedules.js')
+const { scheduleSchema } = require("./schedules.js");
 
 const userScheme = new mongoose.Schema({
   chatId: { type: Number, unique: true },
   name: { type: String },
-  schedules: [weekSchema],
+  schedule: scheduleSchema,
 });
 
 module.exports = mongoose.model("users", userScheme);

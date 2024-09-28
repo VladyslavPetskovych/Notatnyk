@@ -12,7 +12,7 @@ const addNewUser = async (chatId, firstName) => {
 
     setUser(chatId, "name", firstName);
 
-    const response = await axios.post(`${api}user/newUser/`, userData);
+    const response = await axios.post(`${api}N4user/newUser/`, userData);
 
     return response;
   } catch (error) {

@@ -1,4 +1,5 @@
 const bot = require("../bot");
+const getschedule = require("../utils/getSchedule");
 
 const scheduleMarup = {
   reply_markup: JSON.stringify({
@@ -19,7 +20,13 @@ const scheduleMarup = {
 };
 
 const mySchedule = async (chatId, msgId) => {
-  bot.sendMessage(chatId, "Ваш наявний  розклад",scheduleMarup);
+  const userSchedule = await getschedule(chatId);
+  console.log(userSchedule)
+  bot.sendMessage(
+    chatId,
+    `Оберіть день ${JSON.stringify(userSchedule)}}`,
+    scheduleMarup
+  );
   console.log("AAAAAA");
   await bot.answerCallbackQuery(msgId);
 };

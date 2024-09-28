@@ -1,17 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/users");
-const Schedule = require("../models/schedule");
+const scheduleController = require("../controllers/scheduleController");
 
-router.get("/", function (req, res) {
-  //   const newUser = new User({
-  //     name: "John Doe",
-  //   });
-  //   newUser.save();
-
-  let schedule = {};
-
-  res.send("schedule sended ", schedule);
-});
+router.get("/:chatId", scheduleController.getSchedule);
+router.post("/newSchedule", scheduleController.postSchedule);
 
 module.exports = router;

@@ -3,9 +3,10 @@ const { mySchedule } = require("./buttons/mySchedule");
 const editSchedule = require("./buttons/editSchedule");
 const { selectedDay } = require("./buttons/editDay");
 const editLesson = require("./buttons/editLesson");
-const editWeek = require('./buttons/editWeek')
-const { waitForText } = require("./utils/userSelection");
+const { editWeek } = require("./buttons/editWeek");
+const waitForText = require("./utils/userSelection");
 const { getUser, setUser, removeUser } = require("./utils/userCache");
+const saveSchedule = require("./utils/saveSchedule");
 const start = require("./commands/start");
 
 bot.on("message", async (msg) => {
@@ -42,12 +43,13 @@ bot.on("callback_query", async (msg) => {
       setUser(chatId, "currentDay", selectedDayName);
       selectedDay(chatId, msgId, userChoice);
       break;
-    case "lesson1":
-    case "lesson2":
-    case "lesson3":
-    case "lesson4":
-    case "lesson5":
-      setUser(chatId, "currentLesson", userChoice); // Set current lesson
+    case "edit_first":
+    case "edit_second":
+    case "edit_third":
+    case "edit_fourth":
+    case "edit_fifth":
+      const selectedLessonName = userChoice.replace("edit_", "");
+      setUser(chatId, "currentLesson", selectedLessonName);
       editLesson(chatId, msgId, userChoice);
       break;
 
@@ -55,9 +57,9 @@ bot.on("callback_query", async (msg) => {
       await bot.sendMessage(chatId, "Please enter the subject:");
       waitForText(chatId, "subject");
       break;
-    case "proff":
+    case "professor":
       await bot.sendMessage(chatId, "Please enter the professor's name:");
-      waitForText(chatId, "proff");
+      waitForText(chatId, "professor");
       break;
     case "lab":
       await bot.sendMessage(chatId, "Please enter the lab information:");
@@ -68,20 +70,23 @@ bot.on("callback_query", async (msg) => {
       selectedDay(chatId, msgId, userChoice);
       break;
     case "edit_back_to_week":
-      await editSchedule(chatId, msgId);
+      await editSchedule(chatId, msgId, user.isOdd);
       break;
     case "save":
-      console.log(getUser(chatId));
+      saveSchedule(getUser(chatId));
+
       break;
     case "edit_odd":
-      user.isOdd = true; 
+      user.isOdd = true;
+      setUser(chatId, "isOdd", true);
       await editWeek(chatId, msgId, true);
-      setUser(chatId, "isOdd", true); 
+
       break;
     case "edit_even":
-      user.isOdd = false; 
+      user.isOdd = false;
+      setUser(chatId, "isOdd", false);
       await editWeek(chatId, msgId, false);
-      setUser(chatId, "isOdd", false); 
+
       break;
   }
   await bot.answerCallbackQuery(msg.id);

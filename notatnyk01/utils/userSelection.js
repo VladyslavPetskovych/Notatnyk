@@ -5,41 +5,41 @@ const bot = require("../bot");
 const waitForText = (chatId, key) => {
   return new Promise((resolve) => {
     bot.once("message", (msg) => {
-      const user = getUser(chatId) || { schedule: {} }; // Get existing user data or create new one if empty
-
-      // Get the current day and lesson from the user's data
+      const user = getUser(chatId) || { schedule: {} };
       const currentDay = user.currentDay;
       const currentLesson = user.currentLesson;
+      const isOdd = user.isOdd; // Get whether it's odd or even week
 
-      // Initialize the day's schedule if it doesn't exist
-      if (!user.schedule[currentDay]) {
-        user.schedule[currentDay] = {};
-      }
-      if (!user.schedule[currentDay][currentLesson]) {
-        user.schedule[currentDay][currentLesson] = {}; // Ensure current lesson exists
+      // Determine which week's data to update
+      const weekType = isOdd ? "oddWeek" : "evenWeek";
+
+      // Initialize week if not set
+      if (!user.schedule[weekType]) {
+        user.schedule[weekType] = {};
       }
 
-      // Store the new value (e.g., subject, proff, lab) in the correct nested structure
-      user.schedule[currentDay][currentLesson][key] = msg.text;
-
-      // Ensure the full lesson object structure is maintained
-      if (
-        key === "proff" &&
-        !user.schedule[currentDay][currentLesson].subject
-      ) {
-        // If "proff" is set but "subject" doesn't exist, you might want to set a placeholder
-        user.schedule[currentDay][currentLesson].subject = "Subject not set"; // Adjust as necessary
+      // Initialize day if not set
+      if (!user.schedule[weekType][currentDay]) {
+        user.schedule[weekType][currentDay] = {};
       }
+
+      // Initialize lesson if not set
+      if (!user.schedule[weekType][currentDay][currentLesson]) {
+        user.schedule[weekType][currentDay][currentLesson] = {};
+      }
+
+      // Store the value (subject, professor, lab, etc.)
+      user.schedule[weekType][currentDay][currentLesson][key] = msg.text;
 
       setUser(chatId, user); // Save the updated user data
-      resolve(); // Continue execution
+      resolve();
 
       console.log(
         `Updated user object after receiving ${key}:`,
         JSON.stringify(user, null, 2)
-      ); // Log the full user object clearly
+      );
     });
   });
 };
 
-module.exports = { waitForText };
+module.exports =  waitForText ;

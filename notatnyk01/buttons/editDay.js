@@ -3,44 +3,24 @@ const bot = require("../bot");
 const userSchedules = new Map();
 
 
-const editScheduleMarup = {
-  reply_markup: JSON.stringify({
-    inline_keyboard: [
-      [
-        { text: "Пн", callback_data: "edit_monday" },
-        { text: "Вт", callback_data: "edit_tuesday" },
-        { text: "Ср", callback_data: "edit_wednesday" },
-        { text: "Чт", callback_data: "edit_thursday" },
-        { text: "Пт", callback_data: "edit_friday" },
-      ],
-      [
-        { text: "чисельник", callback_data: "edit_odd" },
-        { text: "знаменник", callback_data: "edit_even" },
-      ],
-      [
-        { text: "зберегти зміни", callback_data: "save" },
-        { text: "видалити", callback_data: "delete" },
-      ],
-    ],
-  }),
-};
+
 
 const editMarkupDay = {
   inline_keyboard: [
     [
-      { text: "1️⃣", callback_data: "lesson1" },
+      { text: "1️⃣", callback_data: "edit_first" },
     ],
     [
-      { text: "2️⃣", callback_data: "lesson2" },
+      { text: "2️⃣", callback_data: "edit_second" },
     ],
     [
-      { text: "3️⃣", callback_data: "lesson3" },
+      { text: "3️⃣", callback_data: "edit_third" },
     ],
     [
-      { text: "4️⃣", callback_data: "lesson4" },
+      { text: "4️⃣", callback_data: "edit_fourth" },
     ],
     [
-      { text: "5️⃣", callback_data: "lesson5" },
+      { text: "5️⃣", callback_data: "edit_fifth" },
     ],
     [    { text: "Назад", callback_data: "edit_back_to_week" },]
   ],
@@ -66,4 +46,4 @@ const selectedWeek = (week) => {
 
 
 
-module.exports = {selectedDay, editScheduleMarup };
+module.exports = {selectedDay };

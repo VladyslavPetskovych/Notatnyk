@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const oneLessonSchema = new mongoose.Schema({
-  title: { type: String },
+  subject: { type: String },
   professor: { type: String },
-  room: { type: String },
+  lab: { type: String },
   link: { type: String },
 });
 
@@ -41,6 +41,5 @@ const scheduleSchema = new mongoose.Schema({
 });
 
 module.exports = {
-  Schedule: mongoose.model("schedule", scheduleSchema),
-  weekSchema,
+  scheduleSchema,
 };

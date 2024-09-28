@@ -1,5 +1,8 @@
 const bot = require("../bot");
 
+
+
+
 const editScheduleMarupOdd = {
   reply_markup: JSON.stringify({
     inline_keyboard: [
@@ -11,12 +14,12 @@ const editScheduleMarupOdd = {
         { text: "Пт", callback_data: "edit_friday" },
       ],
       [
-        { text: "чисельник ✔️", callback_data: "edit_odd" },
+        { text: "чисельник ✔️✅", callback_data: "edit_odd" },
         { text: "знаменник", callback_data: "edit_even" },
       ],
       [
         { text: "зберегти зміни", callback_data: "save" },
-        { text: "видалити", callback_data: "delete" },
+        { text: "видалити (на етапі розробки)", callback_data: "delete" },
       ],
     ],
   }),
@@ -34,11 +37,11 @@ const editScheduleMarupEven = {
       ],
       [
         { text: "чисельник", callback_data: "edit_odd" },
-        { text: "знаменник ✔️", callback_data: "edit_even" },
+        { text: "знаменник ✔️✅", callback_data: "edit_even" },
       ],
       [
         { text: "зберегти зміни", callback_data: "save" },
-        { text: "видалити", callback_data: "delete" },
+        { text: "видалити (на етапі розробки)", callback_data: "delete" },
       ],
     ],
   }),
@@ -47,13 +50,17 @@ const editScheduleMarupEven = {
 
 
 function editWeek(chatId, msgId, isOdd) {
+
+  console.log(`Editing week. isOdd: ${isOdd}`);
     const markup = isOdd ? editScheduleMarupOdd : editScheduleMarupEven;
   
-    return bot.editMessageReplyMarkup({
-      chat_id: chatId,
-      message_id: msgId,
-      reply_markup: markup.reply_markup,
-    });
+    return bot.editMessageReplyMarkup(
+       markup.reply_markup, 
+      {
+        chat_id: chatId,
+        message_id: msgId
+      }
+    )
   }
 
-module.exports = editWeek;
+module.exports = {editWeek,editScheduleMarupOdd,editScheduleMarupEven};
