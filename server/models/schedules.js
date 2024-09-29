@@ -5,7 +5,7 @@ const oneLessonSchema = new mongoose.Schema({
   professor: { type: String },
   lab: { type: String },
   link: { type: String },
-});
+},{ _id : false });
 
 const daySchema = new mongoose.Schema({
   first: { type: oneLessonSchema },
@@ -13,7 +13,7 @@ const daySchema = new mongoose.Schema({
   third: { type: oneLessonSchema },
   fourth: { type: oneLessonSchema },
   fifth: { type: oneLessonSchema },
-});
+},{ _id : false });
 
 const weekSchema = new mongoose.Schema({
   monday: {
@@ -31,14 +31,14 @@ const weekSchema = new mongoose.Schema({
   friday: {
     type: daySchema,
   },
-});
+},{ _id : false });
 
 const scheduleSchema = new mongoose.Schema({
   scheduleId: Number,
   isOdd: { type: Boolean, default: true },
   oddWeek: weekSchema,
   evenWeek: weekSchema,
-});
+},{ _id : false });
 
 module.exports = {
   scheduleSchema,

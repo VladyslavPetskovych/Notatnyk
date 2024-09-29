@@ -1,5 +1,6 @@
 const bot = require("./bot.js");
-const { mySchedule } = require("./buttons/mySchedule");
+const { showSchedule,showOddOrEven } = require("./buttons/showSchedule.js");
+const showDaySchedule = require("./buttons/showDaySchedule");
 const editSchedule = require("./buttons/editSchedule");
 const { selectedDay } = require("./buttons/editDay");
 const editLesson = require("./buttons/editLesson");
@@ -29,10 +30,17 @@ bot.on("callback_query", async (msg) => {
 
   switch (userChoice) {
     case "mySchedule":
-      mySchedule(chatId, msgCallId);
+      showSchedule(chatId, msgId);
       break;
     case "edit":
       await editSchedule(chatId, msgCallId);
+      break;
+    case "monday":
+    case "tuesday":
+    case "wednesday":
+    case "thursday":
+    case "friday":
+      showDaySchedule(chatId, msgId, userChoice);
       break;
     case "edit_monday":
     case "edit_tuesday":
@@ -76,6 +84,20 @@ bot.on("callback_query", async (msg) => {
       saveSchedule(getUser(chatId));
 
       break;
+
+    case "odd":
+      user.isOdd = true;
+      setUser(chatId, "isOdd", true);
+      await showOddOrEven(chatId, msgId, true);
+
+      break;
+    case "even":
+      user.isOdd = false;
+      setUser(chatId, "isOdd", false);
+      await showOddOrEven(chatId, msgId, false);
+
+      break;
+
     case "edit_odd":
       user.isOdd = true;
       setUser(chatId, "isOdd", true);
