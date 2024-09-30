@@ -4,7 +4,7 @@ const bot = require("../bot");
 
 
 const editScheduleMarupOdd = {
-  reply_markup: JSON.stringify({
+  reply_markup: {
     inline_keyboard: [
       [
         { text: "Пн", callback_data: "edit_monday" },
@@ -22,11 +22,11 @@ const editScheduleMarupOdd = {
         { text: "видалити (на етапі розробки)", callback_data: "delete" },
       ],
     ],
-  }),
+  },
 };
 
 const editScheduleMarupEven = {
-  reply_markup: JSON.stringify({
+  reply_markup: {
     inline_keyboard: [
       [
         { text: "Пн", callback_data: "edit_monday" },
@@ -44,7 +44,7 @@ const editScheduleMarupEven = {
         { text: "видалити (на етапі розробки)", callback_data: "delete" },
       ],
     ],
-  }),
+  },
 };
 
 

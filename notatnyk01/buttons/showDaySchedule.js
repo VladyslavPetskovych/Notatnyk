@@ -4,27 +4,39 @@ const { getUser, setUser } = require("../utils/userCache");
 const { showOddOrEven, getWeekKeyboard } = require("./showSchedule");
 
 const showDaySchedule = async (chatId, msgId, day) => {
-  // Отримуємо розклад користувача
   const user = await getSchedule(chatId);
   let userCache = await getUser(chatId);
 
-  // Якщо кеш відсутній, встановлюємо його
   if (!userCache) {
-    userCache = { isOdd: user.schedule.isOdd }; // Використовуємо дані розкладу, щоб оновити кеш
-    await setUser(chatId, userCache); // Зберігаємо у кеші
+    userCache = { isOdd: user.schedule.isOdd };
+    await setUser(chatId, userCache);
   }
 
   const schedule = user.schedule;
   let daySchedule;
 
-  // Вибір розкладу в залежності від тижня (чисельник/знаменник)
   if (userCache.isOdd) {
+    if (!schedule.oddWeek || !schedule.oddWeek[day]) {
+      bot.editMessageText(`Розклад на ${day} відсутній.`, {
+        chat_id: chatId,
+        message_id: msgId,
+        reply_markup: getWeekKeyboard(userCache.isOdd).reply_markup,
+      });
+      return;
+    }
     daySchedule = schedule.oddWeek[day];
   } else {
+    if (!schedule.evenWeek || !schedule.evenWeek[day]) {
+      bot.editMessageText(`Розклад на ${day} відсутній.`, {
+        chat_id: chatId,
+        message_id: msgId,
+        reply_markup: getWeekKeyboard(userCache.isOdd).reply_markup,
+      });
+      return;
+    }
     daySchedule = schedule.evenWeek[day];
   }
 
-  // Якщо розклад є, вивести інформацію про день
   if (daySchedule) {
     const lessons = Object.entries(daySchedule)
       .map(([lessonKey, lessonInfo]) => {
@@ -59,17 +71,10 @@ const showDaySchedule = async (chatId, msgId, day) => {
       })
       .join("\n\n");
 
-    // Редагуємо текст повідомлення, але зберігаємо клавіатуру (кнопки)
     bot.editMessageText(`Розклад на ${day}:\n${lessons}`, {
       chat_id: chatId,
       message_id: msgId,
-      reply_markup: getWeekKeyboard(userCache.isOdd).reply_markup, // зберігаємо клавіатуру
-    });
-  } else {
-    bot.editMessageText(`Розклад на ${day} відсутній.`, {
-      chat_id: chatId,
-      message_id: msgId,
-      reply_markup: getWeekKeyboard(userCache.isOdd).reply_markup, // зберігаємо клавіатуру
+      reply_markup: getWeekKeyboard(userCache.isOdd).reply_markup,
     });
   }
 };

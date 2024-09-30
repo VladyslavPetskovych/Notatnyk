@@ -37,7 +37,7 @@ const showSchedule = async (chatId, msgId) => {
   // Використовуємо базову розмітку з чисельником за замовчуванням
   bot.sendMessage(
     chatId,
-    `Оберіть день ${JSON.stringify(userSchedule)}}`,
+    `Оберіть день \n\n`,
     getWeekKeyboard(true) // За замовчуванням чисельник
   );
   console.log(msgId);
