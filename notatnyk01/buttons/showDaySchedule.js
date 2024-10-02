@@ -70,7 +70,10 @@ const showDaySchedule = async (chatId, msgId, day) => {
         return `${emoji} - ${lessonInfo.subject},\n⏱${time}\n👨‍🏫 - ${lessonInfo.professor},\n🏫 - ${lessonInfo.lab}`;
       })
       .join("\n\n");
-
+  // bot.answerCallbackQuery(callbackQuery.id, {
+  //   text: 'This is an alert!',
+  //   show_alert: true
+  // });
     bot.editMessageText(`Розклад на ${day}:\n${lessons}`, {
       chat_id: chatId,
       message_id: msgId,
